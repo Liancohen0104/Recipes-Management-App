@@ -12,7 +12,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.navigation.Navigation;
 import com.example.myapplication.R;
-import com.example.myapplication.models.Student;
+import com.example.myapplication.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
                         {
                             // Sign in success, update UI with the signed-in user's information
                             Toast.makeText(MainActivity.this,"Login Success",Toast.LENGTH_LONG).show();
-                            Navigation.findNavController(view).navigate(R.id.action_fragment1_to_fragment3);
+                            Navigation.findNavController(view).navigate(R.id.action_dragment1_to_fragment3);
                             ((EditText)findViewById(R.id.emailText)).setText("");
                             ((EditText)findViewById(R.id.passwordText)).setText("");
                         } else
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("users").child(phone);
 
-        Student s = new Student(phone,email);
+        User s = new User(phone,email);
         myRef.setValue(s);
     }
 }

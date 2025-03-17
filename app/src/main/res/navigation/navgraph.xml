@@ -11,11 +11,11 @@
         android:label="fragment_1"
         tools:layout="@layout/login_page" >
         <action
-            android:id="@+id/action_fragment1_to_fragment2"
+            android:id="@+id/action_Login_to_fragment2"
             app:destination="@id/Register" />
         <action
-            android:id="@+id/action_fragment1_to_fragment3"
-            app:destination="@id/RecycleView" />
+            android:id="@+id/action_dragment1_to_fragment3"
+            app:destination="@id/Recipes" />
     </fragment>
     <fragment
         android:id="@+id/Register"
@@ -23,17 +23,29 @@
         android:label="fragment_2"
         tools:layout="@layout/register_page" />
     <fragment
-        android:id="@+id/RecycleView"
-        android:name="com.example.myapplication.fragments.RecycleView"
+        android:id="@+id/Recipes"
+        android:name="com.example.myapplication.fragments.RecipesRecycleView"
         android:label="fragment_3"
-        tools:layout="@layout/recycle_view" >
+        tools:layout="@layout/recipes_recycle_view" >
         <action
-            android:id="@+id/action_RecycleView_to_Cart"
-            app:destination="@id/Cart" />
+            android:id="@+id/action_Recipes_to_Favorites"
+            app:destination="@id/Favorites" />
+        <action
+            android:id="@+id/action_Recipes_to_RecipeDetails"
+            app:destination="@id/RecipeDetails" />
     </fragment>
     <fragment
-        android:id="@+id/Cart"
-        android:name="com.example.myapplication.fragments.CartPage"
+        android:id="@+id/Favorites"
+        android:name="com.example.myapplication.fragments.MyRecipesPage"
         android:label="CartPage"
-        tools:layout="@layout/cart_page"/>
+        tools:layout="@layout/favorites_page">
+        <action
+            android:id="@+id/action_Favorites_to_RecipeDetails"
+            app:destination="@id/RecipeDetails" />
+    </fragment>
+    <fragment
+        android:id="@+id/RecipeDetails"
+        android:name="com.example.myapplication.fragments.RecipeDetails"
+        android:label="recipe_details"
+        tools:layout="@layout/recipe_details" />
 </navigation>

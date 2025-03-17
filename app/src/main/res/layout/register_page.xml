@@ -6,75 +6,68 @@
     android:background="@drawable/background"
     android:orientation="vertical"
     android:paddingStart="60dp"
-    android:paddingTop="120dp"
+    android:paddingTop="80dp"
     android:paddingEnd="60dp"
-    android:paddingBottom="100dp"
+    android:paddingBottom="40dp"
+    android:gravity="center"
     tools:context=".fragments.RegisterPage">
 
-    <TextView
-        android:id="@+id/RegisterText"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.5"
-        android:fontFamily="@font/myfont"
-        android:gravity="center"
-        android:text="Register"
-        android:textColor="#ADA08D"
-        android:textSize="40sp"
-        android:textStyle="bold" />
+    <ImageView
+        android:id="@+id/AppLogo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/logo"
+        android:textColor="#ADA08D" />
 
     <EditText
         android:id="@+id/EmailText"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="15dp"
-        android:layout_weight="0.5"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
         android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress"
-        android:textSize="24dp" />
+        android:textSize="24sp" />
 
     <EditText
         android:id="@+id/PasswordText"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="15dp"
-        android:layout_weight="0.5"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
-        android:textSize="24dp" />
+        android:textSize="24sp" />
 
     <EditText
         android:id="@+id/RepeatPasswordText"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="15dp"
-        android:layout_weight="0.5"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
         android:ems="10"
         android:hint="Repeat Password"
         android:inputType="textPassword"
-        android:textSize="23dp" />
+        android:textSize="23sp" />
 
     <EditText
         android:id="@+id/PhoneText"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="15dp"
-        android:layout_weight="0.5"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
         android:ems="10"
         android:hint="Phone"
         android:inputType="phone"
-        android:textSize="24dp" />
+        android:textSize="24sp" />
 
     <Button
         android:id="@+id/CreateAccountButton"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="15dp"
-        android:layout_weight="0.5"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:background="@drawable/buttondesign"
         android:text="Create Account"
-        android:textSize="20dp" />
+        android:textSize="20sp" />
 
 </LinearLayout>

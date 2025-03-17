@@ -108,7 +108,7 @@ public class LoginPage extends Fragment {
             @Override
             public void onClick(View v)
             {
-                Navigation.findNavController(view).navigate(R.id.action_fragment1_to_fragment2);
+                Navigation.findNavController(view).navigate(R.id.action_Login_to_fragment2);
             }
         });
 

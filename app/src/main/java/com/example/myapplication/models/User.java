@@ -1,16 +1,16 @@
 package com.example.myapplication.models;
 
-public class Student
+public class User
 {
     private String email;
     private String phone;
 
-    public Student()
+    public User()
     {
 
     }
 
-    public Student(String phone, String email)
+    public User(String phone, String email)
     {
         this.phone = phone;
         this.email = email;
