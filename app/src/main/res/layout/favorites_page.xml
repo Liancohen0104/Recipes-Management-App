@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="16dp"
     tools:context=".fragments.RegisterPage$CartPage">
 
     <LinearLayout
@@ -37,13 +38,14 @@
         android:id="@+id/myFavorites"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:gravity="center"
-        android:text="My Favorites"
+        android:text="My Favorite"
         android:fontFamily="@font/myfont"
         android:textColor="#ADA08D"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:gravity="left"
+        android:layout_margin="8dp"
+        android:paddingStart="10dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/favoritesRecyclerView"

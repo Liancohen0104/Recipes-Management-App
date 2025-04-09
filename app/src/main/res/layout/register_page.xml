@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/background"
     android:orientation="vertical"
     android:paddingStart="60dp"
@@ -66,8 +67,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:background="@drawable/buttondesign"
         android:text="Create Account"
+        android:icon="@drawable/upload"
+        android:iconTint="@android:color/white"
+        android:textColor="@android:color/white"
+        android:backgroundTint="#ADA08D"
+        app:cornerRadius="50dp"
+        app:iconGravity="textStart"
+        app:iconPadding="8dp"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="8dp"
+        android:fontFamily="@font/myfont"
         android:textSize="20sp" />
 
 </LinearLayout>

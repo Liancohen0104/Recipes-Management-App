@@ -1,5 +1,7 @@
 package com.example.myapplication.fragments;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,7 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.myapplication.R;
+import com.example.myapplication.activities.MainActivity;
 import com.example.myapplication.adapters.IngredientsAdapter;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
@@ -23,6 +28,7 @@ public class RecipeDetails extends Fragment {
     private IngredientsAdapter ingredientsAdapter;
     private ArrayList<String> ingredients;
     private ArrayList<String> quantities;
+    ImageView recipeYoutube;
 
     public RecipeDetails() {
         // Required empty public constructor
@@ -37,6 +43,7 @@ public class RecipeDetails extends Fragment {
         recipeImage = view.findViewById(R.id.image);
         recipeInstructions = view.findViewById(R.id.instructions);
         ingredientsRecyclerView = view.findViewById(R.id.ingredientsRecyclerView);
+        recipeYoutube = view.findViewById(R.id.youtube);
 
         if (getArguments() != null) {
             String recipeNameText = getArguments().getString("recipeName", "No Name");
@@ -44,10 +51,32 @@ public class RecipeDetails extends Fragment {
             ingredients = getArguments().getStringArrayList("recipeIngredients");
             quantities = getArguments().getStringArrayList("recipeQuantities");
             String instructions = getArguments().getString("recipeInstructions", "No Instructions Available");
-
+            String youtube = getArguments().getString("recipeYoutube", "No Youtube Video Available");
             recipeName.setText(recipeNameText);
-            Picasso.get().load(recipeImageString).into(recipeImage);
+
+            if (recipeImageString != null && !recipeImageString.isEmpty()) {
+                Picasso.get()
+                        .load(recipeImageString)
+                        .into(recipeImage);
+            } else {
+                // טען תמונה חלופית
+                Picasso.get()
+                        .load(R.drawable.default_image)
+                        .into(recipeImage);
+            }
+
             recipeInstructions.setText(instructions);
+
+            recipeYoutube.setOnClickListener(v -> {
+                animateClick(v);
+                if (youtube != null && !youtube.isEmpty()) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(youtube));
+                    startActivity(intent);
+                }
+                else{
+                    Toast.makeText(getContext(),"There is no youtube video",Toast.LENGTH_LONG).show();
+                }
+            });
 
             if (ingredients == null) {
                 ingredients = new ArrayList<>();
@@ -70,5 +99,10 @@ public class RecipeDetails extends Fragment {
         }
 
         return view;
+    }
+
+    private void animateClick(View view) {
+        view.animate().scaleX(0.9f).scaleY(0.9f).setDuration(100)
+                .withEndAction(() -> view.animate().scaleX(1f).scaleY(1f).setDuration(100));
     }
 }

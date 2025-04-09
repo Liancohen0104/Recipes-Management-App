@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
                         {
                             // Sign in success, update UI with the signed-in user's information
                             Toast.makeText(MainActivity.this,"Login Success",Toast.LENGTH_LONG).show();
-                            Navigation.findNavController(view).navigate(R.id.action_dragment1_to_fragment3);
+                            Navigation.findNavController(view).navigate(R.id.action_Login_to_optionsFragment);
                             ((EditText)findViewById(R.id.emailText)).setText("");
                             ((EditText)findViewById(R.id.passwordText)).setText("");
                         } else

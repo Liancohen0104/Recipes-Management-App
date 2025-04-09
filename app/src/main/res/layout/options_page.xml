@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:layout_marginBottom="230dp"
+    android:background="@color/white">
+
+    <ScrollView
+        android:id="@+id/scrollContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/buttonWrapper"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:padding="32dp">
+
+            <ImageView
+                android:id="@+id/appLogo"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/logo"
+                android:contentDescription="App Logo"
+                android:layout_marginBottom="16dp"/>
+
+            <TextView
+                android:id="@+id/appName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LET'S COOK"
+                android:textColor="#ADA08D"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/myfont"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:id="@+id/userNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/myfont"
+                android:gravity="center"
+                android:text=""
+                android:textColor="#ADA08D"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/buttonWrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:clipChildren="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingBottom="48dp">
+
+        <LinearLayout
+            android:id="@+id/buttonLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:clipChildren="false">
+
+            <Button
+                android:id="@+id/btnInternetRecipes"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"
+                android:icon="@drawable/upload"
+                android:iconTint="@android:color/white"
+                android:textColor="@android:color/white"
+                android:backgroundTint="#ADA08D"
+                app:cornerRadius="50dp"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="8dp"
+                android:fontFamily="@font/myfont"
+                android:text="Popular 10 Online Recipes"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/btnMyRecipes"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"
+                android:icon="@drawable/upload"
+                android:iconTint="@android:color/white"
+                android:textColor="@android:color/white"
+                android:backgroundTint="#ADA08D"
+                app:cornerRadius="50dp"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="8dp"
+                android:fontFamily="@font/myfont"
+                android:text="My Uploaded Recipes"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/showFavoritesButton"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:icon="@drawable/upload"
+                android:iconTint="@android:color/white"
+                android:textColor="@android:color/white"
+                android:backgroundTint="#ADA08D"
+                app:cornerRadius="50dp"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="8dp"
+                android:fontFamily="@font/myfont"
+                android:text="MY Favorite Recipes"
+                android:textSize="20sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

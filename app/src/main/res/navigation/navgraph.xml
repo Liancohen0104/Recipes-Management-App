@@ -11,11 +11,11 @@
         android:label="fragment_1"
         tools:layout="@layout/login_page" >
         <action
-            android:id="@+id/action_Login_to_fragment2"
+            android:id="@+id/action_Login_to_Register"
             app:destination="@id/Register" />
         <action
-            android:id="@+id/action_dragment1_to_fragment3"
-            app:destination="@id/Recipes" />
+            android:id="@+id/action_Login_to_optionsFragment"
+            app:destination="@id/optionsFragment" />
     </fragment>
     <fragment
         android:id="@+id/Register"
@@ -28,15 +28,12 @@
         android:label="fragment_3"
         tools:layout="@layout/recipes_recycle_view" >
         <action
-            android:id="@+id/action_Recipes_to_Favorites"
-            app:destination="@id/Favorites" />
-        <action
             android:id="@+id/action_Recipes_to_RecipeDetails"
             app:destination="@id/RecipeDetails" />
     </fragment>
     <fragment
         android:id="@+id/Favorites"
-        android:name="com.example.myapplication.fragments.MyRecipesPage"
+        android:name="com.example.myapplication.fragments.MyFavoriesRecipes"
         android:label="CartPage"
         tools:layout="@layout/favorites_page">
         <action
@@ -48,4 +45,34 @@
         android:name="com.example.myapplication.fragments.RecipeDetails"
         android:label="recipe_details"
         tools:layout="@layout/recipe_details" />
+    <fragment
+        android:id="@+id/optionsFragment"
+        android:name="com.example.myapplication.fragments.OptionsFragment"
+        android:label="OptionsFragment" >
+        <action
+            android:id="@+id/action_optionsFragment_to_Recipes"
+            app:destination="@id/Recipes" />
+        <action
+            android:id="@+id/action_optionsFragment_to_Favorites"
+            app:destination="@id/Favorites" />
+        <action
+            android:id="@+id/action_optionsFragment_to_myRecipes"
+            app:destination="@id/MyRecipes" />
+    </fragment>
+    <fragment
+        android:id="@+id/MyRecipes"
+        android:name="com.example.myapplication.fragments.MyRecipes"
+        android:label="my_recipes"
+        tools:layout="@layout/my_recipes" >
+        <action
+            android:id="@+id/action_MyRecipes_to_RecipeDetails"
+            app:destination="@id/RecipeDetails" />
+        <action
+            android:id="@+id/action_MyRecipes_to_UploadRecipe"
+            app:destination="@id/UploadRecipe" />
+    </fragment>
+    <fragment
+        android:id="@+id/UploadRecipe"
+        android:name="com.example.myapplication.fragments.UploadRecipe"
+        android:label="UploadRecipe" />
 </navigation>

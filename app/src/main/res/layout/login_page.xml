@@ -58,9 +58,18 @@
             android:id="@+id/loginButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/buttondesign"
             android:text="Login"
+            android:layout_marginTop="30dp"
+            android:icon="@drawable/upload"
+            android:iconTint="@android:color/white"
+            android:textColor="@android:color/white"
+            android:backgroundTint="#ADA08D"
+            app:cornerRadius="50dp"
+            app:iconGravity="textStart"
+            app:iconPadding="8dp"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="8dp"
+            android:fontFamily="@font/myfont"
             android:textSize="24sp" />
 
         <Button
@@ -68,8 +77,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@drawable/buttondesign"
+            android:icon="@drawable/upload"
+            android:iconTint="@android:color/white"
+            android:textColor="@android:color/white"
+            android:backgroundTint="#ADA08D"
+            app:cornerRadius="50dp"
+            app:iconGravity="textStart"
+            app:iconPadding="8dp"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="8dp"
             android:text="Register"
+            android:fontFamily="@font/myfont"
             android:textSize="24sp" />
 
 </LinearLayout>

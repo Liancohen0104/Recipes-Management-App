@@ -45,8 +45,8 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_gravity="center_vertical"
-                android:contentDescription="Favorite Button"
-                android:src="@android:drawable/btn_star_big_off" />
+                android:contentDescription="Remove Button"
+                android:src="@android:drawable/ic_menu_delete" />
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

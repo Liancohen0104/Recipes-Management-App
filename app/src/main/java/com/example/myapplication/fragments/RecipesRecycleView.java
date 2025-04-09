@@ -40,7 +40,6 @@ public class RecipesRecycleView extends Fragment implements OnClickListener
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     private RecipesAdapter adapter;
-    TextView nameTextView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,27 +51,13 @@ public class RecipesRecycleView extends Fragment implements OnClickListener
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.recipes_recycle_view, container, false);
 
-        // כפתור למעבר למועדפים
-        Button favoritesButton = view.findViewById(R.id.showFavoritesButton);
-        favoritesButton.setOnClickListener(v -> Navigation.findNavController(view).navigate(R.id.action_Recipes_to_Favorites));
-
         recipeList = new ArrayList<>();
         recyclerView = view.findViewById(R.id.favoritesRecyclerView);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        adapter = new RecipesAdapter(requireContext(), recipeList, this);
+        adapter = new RecipesAdapter(requireContext(), recipeList, this, false);
         recyclerView.setAdapter(adapter);
-
-        // הצגת שם המשתמש המחובר
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        nameTextView = view.findViewById(R.id.userNameTextView);
-        if (auth.getCurrentUser() != null) {
-            String email = auth.getCurrentUser().getEmail();
-            nameTextView.setText("Hello, " + email);
-        } else {
-            nameTextView.setText("No user logged in");
-        }
 
         // חיפוש
         SearchView searchView = view.findViewById(R.id.searchView);
@@ -183,6 +168,7 @@ public class RecipesRecycleView extends Fragment implements OnClickListener
                     productData.put("ingredients", recipe.getIngredients());
                     productData.put("quantities", recipe.getMeasures());
                     productData.put("instructions", recipe.getInstructions());
+                    productData.put("youtube", recipe.getYoutube());
 
 
                     DatabaseReference productsRef = database.getReference("users").child(phone).child("Favorite recipes");
@@ -284,7 +270,12 @@ public class RecipesRecycleView extends Fragment implements OnClickListener
         bundle.putStringArrayList("recipeIngredients", recipe.getIngredients());
         bundle.putStringArrayList("recipeQuantities", recipe.getMeasures());
         bundle.putString("recipeInstructions", recipe.getInstructions());
+        bundle.putString("recipeYoutube", recipe.getYoutube());
 
         Navigation.findNavController(getView()).navigate(R.id.action_Recipes_to_RecipeDetails, bundle);
+    }
+
+    @Override
+    public void OnRemoveClicked(Recipe recipe) {
     }
 }

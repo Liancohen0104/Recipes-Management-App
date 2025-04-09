@@ -1,69 +1,54 @@
 package com.example.myapplication.fragments;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
 import com.example.myapplication.R;
 import com.example.myapplication.adapters.RecipesAdapter;
 import com.example.myapplication.interfaces.OnClickListener;
 import com.example.myapplication.models.Recipe;
 import com.example.myapplication.models.User;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
+import com.google.firebase.database.*;
 import java.util.ArrayList;
 
-public class MyRecipesPage extends Fragment implements OnClickListener {
+public class MyRecipes extends Fragment implements OnClickListener {
 
     private RecyclerView recyclerView;
     private RecipesAdapter adapter;
-    private ArrayList<Recipe> favoriteRecipes = new ArrayList<>();
+    private ArrayList<Recipe> myRecipes = new ArrayList<>();
 
-    public MyRecipesPage() {
-    }
-
-    public static MyRecipesPage newInstance(String param1, String param2) {
-        MyRecipesPage fragment = new MyRecipesPage();
-        Bundle args = new Bundle();
-        args.putString("param1", param1);
-        args.putString("param2", param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    public MyRecipes() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.favorites_page, container, false);
+        View view = inflater.inflate(R.layout.my_recipes, container, false);
 
         recyclerView = view.findViewById(R.id.favoritesRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        adapter = new RecipesAdapter(requireContext(), favoriteRecipes, this);
+        adapter = new RecipesAdapter(requireContext(), myRecipes, this, true);
         recyclerView.setAdapter(adapter);
 
-        loadUserFavorites();
+        // כפתור פתיחת מסך הוספת מתכון
+        Button uploadBtn = view.findViewById(R.id.uploadRecipeButton);
+        uploadBtn.setOnClickListener(v ->
+                Navigation.findNavController(view).navigate(R.id.action_MyRecipes_to_UploadRecipe));
+
+        loadUserRecipes();
 
         return view;
     }
 
-    private void loadUserFavorites() {
+    private void loadUserRecipes() {
         String currentEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -74,35 +59,35 @@ public class MyRecipesPage extends Fragment implements OnClickListener {
             public void onDataChange(DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     for (DataSnapshot userSnapshot : snapshot.getChildren()) {
-                        String phone = userSnapshot.getKey();
+                        User user = userSnapshot.getValue(User.class);
+                        String phone = user.getPhone();
 
-                        DatabaseReference recipesRef = database.getReference("users").child(phone).child("Favorite recipes");
+                        DatabaseReference recipesRef = database.getReference("users").child(phone).child("My Uploaded Recipes");
 
                         recipesRef.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot recipeSnapshot) {
-                                favoriteRecipes.clear();
+                                myRecipes.clear();
 
                                 for (DataSnapshot product : recipeSnapshot.getChildren()) {
                                     String name = product.child("name").getValue(String.class);
                                     String image = product.child("image").getValue(String.class);
                                     String instructions = product.child("instructions").getValue(String.class);
+                                    String youtube = product.child("youtube").getValue(String.class);
 
-                                    // שליפת המצרכים
                                     ArrayList<String> ingredientsList = new ArrayList<>();
                                     for (DataSnapshot ingredientSnapshot : product.child("ingredients").getChildren()) {
                                         ingredientsList.add(ingredientSnapshot.getValue(String.class));
                                     }
 
-                                    // שליפת הכמויות
                                     ArrayList<String> measuresList = new ArrayList<>();
                                     for (DataSnapshot measureSnapshot : product.child("quantities").getChildren()) {
                                         measuresList.add(measureSnapshot.getValue(String.class));
                                     }
 
-                                    Recipe recipeModel = new Recipe(name, image, ingredientsList, measuresList, instructions);
-                                    recipeModel.setFavorite(true);
-                                    favoriteRecipes.add(recipeModel);
+                                    Recipe recipeModel = new Recipe(name, image, ingredientsList, measuresList, instructions, youtube);
+                                    recipeModel.setFavorite(false);
+                                    myRecipes.add(recipeModel);
                                 }
 
                                 adapter.notifyDataSetChanged();
@@ -110,7 +95,7 @@ public class MyRecipesPage extends Fragment implements OnClickListener {
 
                             @Override
                             public void onCancelled(DatabaseError error) {
-                                Toast.makeText(getContext(), "Failed to load products: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "Failed to load recipes", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -121,12 +106,12 @@ public class MyRecipesPage extends Fragment implements OnClickListener {
 
             @Override
             public void onCancelled(DatabaseError error) {
-                Toast.makeText(getContext(), "Database error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Database error", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void removeRecipeFromFavorites(String recipeName) {
+    public void OnRemoveClicked(Recipe recipe) {
         String currentEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -139,27 +124,27 @@ public class MyRecipesPage extends Fragment implements OnClickListener {
                     User user = userSnapshot.getValue(User.class);
                     String phone = user.getPhone();
 
-                    // הפניה לנתיב של המתכונים
-                    DatabaseReference productsRef = database.getReference("users").child(phone).child("Favorite recipes");
+                    DatabaseReference recipesRef = database.getReference("users")
+                            .child(phone)
+                            .child("My Uploaded Recipes");
 
-                    productsRef.child(recipeName).addListenerForSingleValueEvent(new ValueEventListener() {
+                    recipesRef.child(recipe.getName()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
-                        public void onDataChange(DataSnapshot productSnapshot) {
-                            if (productSnapshot.exists()) {
-                                // המתכון קיים - מחיקה
-                                productsRef.child(recipeName).removeValue()
+                        public void onDataChange(DataSnapshot recipeSnapshot) {
+                            if (recipeSnapshot.exists()) {
+                                recipesRef.child(recipe.getName()).removeValue()
                                         .addOnCompleteListener(task -> {
                                             if (task.isSuccessful()) {
-                                                favoriteRecipes.removeIf(recipe -> recipe.getName().equals(recipeName));
+                                                // הסרה גם מהרשימה המקומית
+                                                myRecipes.removeIf(r -> r.getName().equals(recipe.getName()));
                                                 adapter.notifyDataSetChanged();
                                                 Toast.makeText(getContext(), "Recipe removed successfully", Toast.LENGTH_SHORT).show();
                                             } else {
-                                                Toast.makeText(getContext(), "Removing the recipe failed", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getContext(), "Failed to remove recipe", Toast.LENGTH_SHORT).show();
                                             }
                                         });
                             } else {
-                                // המתכון לא קיים
-                                Toast.makeText(getContext(), "This recipe is not in favorites", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "Recipe not found", Toast.LENGTH_SHORT).show();
                             }
                         }
 
@@ -179,17 +164,6 @@ public class MyRecipesPage extends Fragment implements OnClickListener {
     }
 
     @Override
-    public void OnFavoriteClicked(Recipe recipe) {
-        if (recipe.isFavorite()) {
-            removeRecipeFromFavorites(recipe.getName());
-        }
-
-        // עדכון מצב המועדף במתכון
-        recipe.setFavorite(!recipe.isFavorite());
-        adapter.notifyDataSetChanged();
-    }
-
-    @Override
     public void OnRecipeClicked(Recipe recipe) {
         Bundle bundle = new Bundle();
         bundle.putString("recipeName", recipe.getName());
@@ -197,7 +171,13 @@ public class MyRecipesPage extends Fragment implements OnClickListener {
         bundle.putStringArrayList("recipeIngredients", recipe.getIngredients());
         bundle.putStringArrayList("recipeQuantities", recipe.getMeasures());
         bundle.putString("recipeInstructions", recipe.getInstructions());
+        bundle.putString("recipeYoutube", recipe.getYoutube());
 
-        Navigation.findNavController(getView()).navigate(R.id.action_Favorites_to_RecipeDetails, bundle);
+        Navigation.findNavController(getView()).navigate(R.id.action_MyRecipes_to_RecipeDetails, bundle);
+    }
+
+    @Override
+    public void OnFavoriteClicked(Recipe recipe) {
+
     }
 }

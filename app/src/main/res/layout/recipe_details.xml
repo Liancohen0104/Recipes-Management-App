@@ -7,7 +7,6 @@
     android:padding="16dp"
     tools:context=".fragments.RecipeDetails">
 
-    <!-- Header with Logo and Company Name -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -44,8 +43,9 @@
         android:textColor="#ADA08D"
         android:textSize="22sp"
         android:textStyle="bold"
-        android:gravity="center"
-        android:paddingBottom="8dp"/>
+        android:gravity="left"
+        android:layout_margin="8dp"
+        android:paddingStart="10dp" />
 
     <TextView
         android:id="@+id/name"
@@ -64,6 +64,27 @@
         android:layout_height="200dp"
         android:layout_marginBottom="16dp"
         tools:src="@tools:sample/avatars" />
+
+    <LinearLayout
+        android:id="@+id/youtubeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="start"
+        android:paddingTop="8dp"
+        android:paddingBottom="4dp">
+
+        <ImageView
+            android:id="@+id/youtube"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="4dp"
+            android:src="@drawable/youtube"
+            android:contentDescription="Watch on YouTube"
+            android:clickable="true"
+            android:focusable="true"/>
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/IngredientsTextView"

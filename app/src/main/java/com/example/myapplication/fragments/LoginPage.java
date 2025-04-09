@@ -79,6 +79,7 @@ public class LoginPage extends Fragment {
             @Override
             public void onClick(View v)
             {
+                animateClick(v);
                 boolean callLogin = true;
                 String mailString = mailTextView.getText().toString();
                 if (TextUtils.isEmpty(mailString))
@@ -108,11 +109,17 @@ public class LoginPage extends Fragment {
             @Override
             public void onClick(View v)
             {
-                Navigation.findNavController(view).navigate(R.id.action_Login_to_fragment2);
+                animateClick(v);
+                Navigation.findNavController(view).navigate(R.id.action_Login_to_Register);
             }
         });
 
       return view;
+    }
+
+    private void animateClick(View view) {
+        view.animate().scaleX(0.9f).scaleY(0.9f).setDuration(100)
+                .withEndAction(() -> view.animate().scaleX(1f).scaleY(1f).setDuration(100));
     }
 }
 

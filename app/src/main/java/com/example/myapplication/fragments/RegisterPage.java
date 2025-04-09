@@ -82,6 +82,7 @@ public class RegisterPage extends Fragment {
             @Override
             public void onClick(View v)
             {
+                animateClick(v);
                 RegisterValidation(view);
                 MainActivity mainActivity = (MainActivity) getActivity();
                 mainActivity.reg();
@@ -171,5 +172,10 @@ public class RegisterPage extends Fragment {
             // Inflate the layout for this fragment
             return inflater.inflate(R.layout.favorites_page, container, false);
         }
+    }
+
+    private void animateClick(View view) {
+        view.animate().scaleX(0.9f).scaleY(0.9f).setDuration(100)
+                .withEndAction(() -> view.animate().scaleX(1f).scaleY(1f).setDuration(100));
     }
 }

@@ -15,64 +15,76 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeViewHolder> {
-    private List<Recipe> recipes;
-    private OnClickListener listener;
-    private Context context;
+    private final List<Recipe> recipes;
+    private final OnClickListener listener;
+    private final Context context;
+    private final boolean isPersonalRecipe;
 
-    public RecipesAdapter(Context context, List<Recipe> recipes, OnClickListener listener) {
+    public RecipesAdapter(Context context, List<Recipe> recipes, OnClickListener listener, boolean isPersonalRecipe) {
         this.recipes = recipes;
         this.listener = listener;
         this.context = context;
+        this.isPersonalRecipe = isPersonalRecipe;
     }
 
     @NonNull
     @Override
     public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.card_row, parent, false);
+        int layoutId = isPersonalRecipe ? R.layout.card_my_recipes : R.layout.card_row;
+        View view = LayoutInflater.from(context).inflate(layoutId, parent, false);
         return new RecipeViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecipeViewHolder holder, int position) {
         Recipe recipe = recipes.get(position);
-
-        // עדכון פרטי המתכון
         holder.recipeNameTextView.setText(recipe.getName());
 
-        // עדכון תמונת המתכון
-        Picasso.get()
-                .load(recipe.getImage())
-                .into(holder.recipeImageView);
+        String imageUrl = recipe.getImage();
+        if (imageUrl != null && !imageUrl.isEmpty()) {
+            Picasso.get()
+                    .load(imageUrl)
+                    .into(holder.recipeImageView);
+        } else {
+            // טען תמונה חלופית אם אין URL
+            Picasso.get()
+                    .load(R.drawable.default_image)
+                    .into(holder.recipeImageView);
+        }
 
-        holder.favoriteButton.setOnClickListener(v -> {
-            listener.OnFavoriteClicked(recipe);
-        });
+        if (isPersonalRecipe) {
+            holder.actionButton.setImageResource(android.R.drawable.ic_menu_delete);
+            holder.actionButton.setOnClickListener(v -> {
+                listener.OnRemoveClicked(recipe);
+            });
+        } else {
+            holder.actionButton.setImageResource(
+                    recipe.isFavorite() ? android.R.drawable.btn_star_big_on : android.R.drawable.btn_star_big_off
+            );
+            holder.actionButton.setOnClickListener(v -> {
+                listener.OnFavoriteClicked(recipe);
+            });
+        }
 
         holder.itemView.setOnClickListener(v -> {
             listener.OnRecipeClicked(recipe);
         });
-
-        if (recipe.isFavorite()) {
-            holder.favoriteButton.setImageResource(android.R.drawable.btn_star_big_on); // כוכב מלא
-        } else {
-            holder.favoriteButton.setImageResource(android.R.drawable.btn_star_big_off); // כוכב ריק
-        }
     }
 
     @Override
     public int getItemCount() {
-        return recipes.size(); // מחזיר את גודל הרשימה
+        return recipes.size();
     }
 
     public static class RecipeViewHolder extends RecyclerView.ViewHolder {
         TextView recipeNameTextView;
-        public ImageView recipeImageView, favoriteButton;
+        public ImageView recipeImageView, actionButton;
 
         public RecipeViewHolder(@NonNull View itemView) {
             super(itemView);
             recipeNameTextView = itemView.findViewById(R.id.name);
             recipeImageView = itemView.findViewById(R.id.image);
-            favoriteButton = itemView.findViewById(R.id.favoriteButton);
+            actionButton = itemView.findViewById(R.id.favoriteButton);
         }
     }
 }
