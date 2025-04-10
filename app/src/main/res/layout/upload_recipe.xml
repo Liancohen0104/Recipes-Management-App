@@ -46,13 +46,27 @@
             android:layout_marginTop="12dp"
             android:hint="Recipe Name" />
 
-        <EditText
-            android:id="@+id/imageUrlEditText"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:hint="Image URL"
-            android:inputType="textUri"
-            android:layout_marginTop="12dp" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp">
+
+            <EditText
+                android:id="@+id/imageUrlEditText"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="48dp"
+                android:hint="Image (URL Or Upload)"
+                android:inputType="textUri" />
+
+            <Button
+                android:id="@+id/pickImageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:text="Upload"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
 
         <EditText
             android:id="@+id/instructionsEditText"
@@ -64,13 +78,27 @@
             android:inputType="textMultiLine"
             android:layout_marginTop="12dp" />
 
-        <EditText
-            android:id="@+id/youtubeUrlEditText"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:hint="YouTube Video URL"
-            android:inputType="textUri"
-            android:layout_marginTop="12dp" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp">
+
+            <EditText
+                android:id="@+id/youtubeUrlEditText"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="48dp"
+                android:hint="Video (URL Or Upload)"
+                android:inputType="textUri" />
+
+            <Button
+                android:id="@+id/pickVideoButton"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:text="Upload"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -81,7 +109,6 @@
             android:layout_marginTop="24dp"
             android:textColor="#ADA08D" />
 
-        <!-- אזור דינאמי למצרכים -->
         <LinearLayout
             android:id="@+id/ingredientsContainer"
             android:layout_width="match_parent"

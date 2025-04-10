@@ -71,10 +71,10 @@ public class RegisterPage extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.register_page, container, false);
 
-        mailTextView = view.findViewById(R.id.EmailText);
-        phoneTextView = view.findViewById(R.id.PhoneText);
-        passwordTextView = view.findViewById(R.id.PasswordText);
-        repeatPasswordTextView = view.findViewById(R.id.RepeatPasswordText);
+        mailTextView = view.findViewById(R.id.EmailReg);
+        phoneTextView = view.findViewById(R.id.PhoneReg);
+        passwordTextView = view.findViewById(R.id.PasswordReg);
+        repeatPasswordTextView = view.findViewById(R.id.RepeatPasswordReg);
 
         Button button = view.findViewById(R.id.CreateAccountButton);
         button.setOnClickListener(new View.OnClickListener()
@@ -83,40 +83,46 @@ public class RegisterPage extends Fragment {
             public void onClick(View v)
             {
                 animateClick(v);
-                RegisterValidation(view);
-                MainActivity mainActivity = (MainActivity) getActivity();
-                mainActivity.reg();
-                mainActivity.addData();
+                if (RegisterValidation(view)) {
+                    MainActivity mainActivity = (MainActivity) getActivity();
+                    mainActivity.reg(v);
+                    mainActivity.addData();
+                }
             }
         });
+
         return view;
     }
 
-    public void RegisterValidation(View view)
+    public boolean RegisterValidation(View view)
     {
+        boolean isValid = true;
+
         String mailString = mailTextView.getText().toString();
-        if (TextUtils.isEmpty(mailString) || !Patterns.EMAIL_ADDRESS.matcher(mailString).matches())
-        {
+        if (TextUtils.isEmpty(mailString) || !Patterns.EMAIL_ADDRESS.matcher(mailString).matches()) {
             mailTextView.setError("Invalid Or Empty Mail");
+            isValid = false;
         }
 
         String phoneString = phoneTextView.getText().toString();
-        if (TextUtils.isEmpty(phoneString) || !phoneString.matches("\\d{10}"))
-        {
+        if (TextUtils.isEmpty(phoneString) || !phoneString.matches("\\d{10}")) {
             phoneTextView.setError("Invalid Or Empty Phone");
+            isValid = false;
         }
 
         String passwordString = passwordTextView.getText().toString();
-        if (TextUtils.isEmpty(passwordString) || passwordString.length() < 6)
-        {
+        if (TextUtils.isEmpty(passwordString) || passwordString.length() < 6) {
             passwordTextView.setError("Invalid Or Empty Password");
+            isValid = false;
         }
 
         String repeatPasswordString = repeatPasswordTextView.getText().toString();
-        if (TextUtils.isEmpty(repeatPasswordString) || !repeatPasswordString.equals(passwordString))
-        {
+        if (TextUtils.isEmpty(repeatPasswordString) || !repeatPasswordString.equals(passwordString)) {
             repeatPasswordTextView.setError("Password Don't Match Or Repeat Password Is Empty");
+            isValid = false;
         }
+
+        return isValid;
     }
 
     /**

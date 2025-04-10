@@ -64,10 +64,10 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    public void reg()
+    public void reg(View v)
     {
-        String email = ((EditText)findViewById(R.id.EmailText)).getText().toString();
-        String password = ((EditText)findViewById(R.id.PasswordText)).getText().toString();
+        String email = ((EditText)findViewById(R.id.EmailReg)).getText().toString();
+        String password = ((EditText)findViewById(R.id.PasswordReg)).getText().toString();
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>()
@@ -79,6 +79,10 @@ public class MainActivity extends AppCompatActivity {
                         {
                             // Sign in success, update UI with the signed-in user's information
                             Toast.makeText(MainActivity.this,"Register Success",Toast.LENGTH_LONG).show();
+                            ((EditText)findViewById(R.id.EmailReg)).setText("");
+                            ((EditText)findViewById(R.id.PasswordReg)).setText("");
+                            ((EditText)findViewById(R.id.PhoneReg)).setText("");
+                            ((EditText)findViewById(R.id.RepeatPasswordReg)).setText("");
                         } else
                         {
                             // If sign in fails, display a message to the user.
@@ -90,8 +94,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void addData()
     {
-        String phone = ((EditText)findViewById(R.id.PhoneText)).getText().toString();
-        String email = ((EditText)findViewById(R.id.EmailText)).getText().toString();
+        String phone = ((EditText)findViewById(R.id.PhoneReg)).getText().toString();
+        String email = ((EditText)findViewById(R.id.EmailReg)).getText().toString();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("users").child(phone);

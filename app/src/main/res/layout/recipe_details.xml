@@ -79,7 +79,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginStart="4dp"
-            android:src="@drawable/youtube"
+            android:src="@android:drawable/presence_video_busy"
             android:contentDescription="Watch on YouTube"
             android:clickable="true"
             android:focusable="true"/>

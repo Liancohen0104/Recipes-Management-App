@@ -1,6 +1,7 @@
 package com.example.myapplication.adapters;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 import com.example.myapplication.interfaces.OnClickListener;
 import com.example.myapplication.models.Recipe;
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 import java.util.List;
 
 public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeViewHolder> {
@@ -42,12 +43,12 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeVi
 
         String imageUrl = recipe.getImage();
         if (imageUrl != null && !imageUrl.isEmpty()) {
-            Picasso.get()
-                    .load(imageUrl)
+            Uri uri = Uri.parse(imageUrl);
+            Glide.with(holder.itemView.getContext())
+                    .load(uri)
                     .into(holder.recipeImageView);
         } else {
-            // טען תמונה חלופית אם אין URL
-            Picasso.get()
+            Glide.with(holder.itemView.getContext())
                     .load(R.drawable.default_image)
                     .into(holder.recipeImageView);
         }

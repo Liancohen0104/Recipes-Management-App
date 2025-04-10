@@ -1,11 +1,15 @@
 package com.example.myapplication.fragments;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -14,11 +18,7 @@ import androidx.navigation.Navigation;
 import com.example.myapplication.R;
 import com.example.myapplication.models.User;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,7 +30,11 @@ public class UploadRecipe extends Fragment {
     private LinearLayout ingredientsContainer;
     private Button addIngredientButton, saveButton;
 
-    public UploadRecipe() {}
+    private ActivityResultLauncher<String> imagePickerLauncher;
+    private ActivityResultLauncher<String> videoPickerLauncher;
+
+    public UploadRecipe() {
+    }
 
     @Nullable
     @Override
@@ -44,6 +48,36 @@ public class UploadRecipe extends Fragment {
         ingredientsContainer = view.findViewById(R.id.ingredientsContainer);
         addIngredientButton = view.findViewById(R.id.addIngredientButton);
         saveButton = view.findViewById(R.id.saveButton);
+
+        // מאפשר לבחור תמונה מהמכשיר
+        imagePickerLauncher = registerForActivityResult(
+                new ActivityResultContracts.GetContent(),
+                uri -> {
+                    if (uri != null) {
+                        imageUrlEditText.setText(uri.toString());
+                    }
+                }
+        );
+
+        // מאפשר לבחור סרטון מהמכשיר
+        videoPickerLauncher = registerForActivityResult(
+                new ActivityResultContracts.GetContent(),
+                uri -> {
+                    if (uri != null) {
+                        youtubeUrlEditText.setText(uri.toString());
+                    }
+                }
+        );
+
+        // לחיצה על כפתור העלאת תמונה
+        view.findViewById(R.id.pickImageButton).setOnClickListener(v -> {
+            imagePickerLauncher.launch("image/*");
+        });
+
+        // לחיצה על כפתור העלאת סרטון
+        view.findViewById(R.id.pickVideoButton).setOnClickListener(v -> {
+            videoPickerLauncher.launch("video/*");
+        });
 
         addIngredientButton.setOnClickListener(v -> addIngredientRow(null, null));
         saveButton.setOnClickListener(v -> saveRecipe());
@@ -106,9 +140,9 @@ public class UploadRecipe extends Fragment {
 
                     Map<String, Object> recipeData = new HashMap<>();
                     recipeData.put("name", name);
-                    recipeData.put("image", imageUrl);
+                    recipeData.put("image", imageUrl); // יכול להיות URL או URI
                     recipeData.put("instructions", instructions);
-                    recipeData.put("youtube", youtubeUrl);
+                    recipeData.put("youtube", youtubeUrl); // יכול להיות URL או URI
                     recipeData.put("ingredients", ingredients);
                     recipeData.put("quantities", quantities);
 

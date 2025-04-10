@@ -95,7 +95,7 @@
                 android:textSize="20sp" />
 
             <Button
-                android:id="@+id/btnMyRecipes"
+                android:id="@+id/showFavoritesButton"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="25dp"
@@ -109,25 +109,25 @@
                 android:paddingHorizontal="20dp"
                 android:paddingVertical="8dp"
                 android:fontFamily="@font/myfont"
-                android:text="My Uploaded Recipes"
+                android:text="MY Favorite Recipes"
                 android:textSize="20sp" />
 
             <Button
-                android:id="@+id/showFavoritesButton"
+                android:id="@+id/btnMyRecipes"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
+                android:backgroundTint="#ADA08D"
+                android:fontFamily="@font/myfont"
                 android:icon="@drawable/upload"
                 android:iconTint="@android:color/white"
-                android:textColor="@android:color/white"
-                android:backgroundTint="#ADA08D"
-                app:cornerRadius="50dp"
-                app:iconGravity="textStart"
-                app:iconPadding="8dp"
                 android:paddingHorizontal="20dp"
                 android:paddingVertical="8dp"
-                android:fontFamily="@font/myfont"
-                android:text="MY Favorite Recipes"
-                android:textSize="20sp" />
+                android:text="My Uploaded Recipes"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                app:cornerRadius="50dp"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp" />
         </LinearLayout>
     </LinearLayout>
 

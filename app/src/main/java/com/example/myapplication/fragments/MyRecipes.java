@@ -166,13 +166,8 @@ public class MyRecipes extends Fragment implements OnClickListener {
     @Override
     public void OnRecipeClicked(Recipe recipe) {
         Bundle bundle = new Bundle();
+        bundle.putString("recipeSource", "myRecipes");
         bundle.putString("recipeName", recipe.getName());
-        bundle.putString("recipeImage", recipe.getImage());
-        bundle.putStringArrayList("recipeIngredients", recipe.getIngredients());
-        bundle.putStringArrayList("recipeQuantities", recipe.getMeasures());
-        bundle.putString("recipeInstructions", recipe.getInstructions());
-        bundle.putString("recipeYoutube", recipe.getYoutube());
-
         Navigation.findNavController(getView()).navigate(R.id.action_MyRecipes_to_RecipeDetails, bundle);
     }
 

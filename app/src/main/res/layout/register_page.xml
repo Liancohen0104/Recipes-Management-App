@@ -23,7 +23,7 @@
         android:textColor="#ADA08D" />
 
     <EditText
-        android:id="@+id/EmailText"
+        android:id="@+id/EmailReg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
@@ -33,7 +33,7 @@
         android:textSize="24sp" />
 
     <EditText
-        android:id="@+id/PasswordText"
+        android:id="@+id/PasswordReg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
@@ -43,7 +43,7 @@
         android:textSize="24sp" />
 
     <EditText
-        android:id="@+id/RepeatPasswordText"
+        android:id="@+id/RepeatPasswordReg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
@@ -53,7 +53,7 @@
         android:textSize="23sp" />
 
     <EditText
-        android:id="@+id/PhoneText"
+        android:id="@+id/PhoneReg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
